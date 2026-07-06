@@ -865,14 +865,25 @@ elif daftar == "Simulasi Dataset Baru":
                 status_area.info("🔄 Membersihkan dataset...")
                 progress_bar.progress(10)
 
-                prov_arg = nama_provinsi if nama_provinsi.strip() else None
+                prov_arg = nama_provinsi.strip() if nama_provinsi.strip() else None
 
-                df_result = cluster_dataset_baru(
-                    uploaded_file,
-                    nama_provinsi=prov_arg,
-                    sheet_name=sheet_name,
-                    progress_callback=progress_callback,
-                )
+                try:
+                    df_result = cluster_dataset_baru(
+                        uploaded_file,
+                        nama_provinsi=prov_arg,
+                        sheet_name=sheet_name,
+                        progress_callback=progress_callback,
+                    )
+                except ValueError as ve:
+                    if "provinsi" in str(ve).lower():
+                        progress_bar.progress(0)
+                        status_area.warning(
+                            "⚠️ File ini tidak memiliki kolom **'provinsi'**. "
+                            "Silakan isi **Nama Provinsi** di kolom sebelah kanan, "
+                            "lalu klik **Jalankan Analisis** kembali."
+                        )
+                        st.stop()
+                    raise
 
                 progress_bar.progress(100)
 
