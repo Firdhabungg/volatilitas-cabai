@@ -833,17 +833,27 @@ elif daftar == "Simulasi Dataset Baru":
             placeholder="Contoh: Jawa Tengah",
             help="Isi jika file tidak punya kolom 'provinsi'",
         )
-        sheet_name_input = st.text_input(
-            "📄 Nama Sheet (untuk Excel)",
-            value="0",
-            help="Nomor sheet (0 = pertama) atau nama sheet",
-        )
 
-    # Parse sheet_name
-    try:
-        sheet_name = int(sheet_name_input)
-    except ValueError:
-        sheet_name = sheet_name_input
+    # Auto-detect sheet names for Excel files
+    sheet_name = 0  # default: sheet pertama
+    if uploaded_file is not None:
+        ext = os.path.splitext(uploaded_file.name)[1].lower()
+        if ext in ['.xlsx', '.xls']:
+            try:
+                xl = pd.ExcelFile(uploaded_file)
+                sheet_names = xl.sheet_names
+                uploaded_file.seek(0)  # reset file pointer setelah dibaca
+
+                if len(sheet_names) > 1:
+                    sheet_name = st.selectbox(
+                        "📄 Pilih Sheet",
+                        sheet_names,
+                        help="File Excel ini memiliki beberapa sheet. Pilih sheet yang berisi data harga.",
+                    )
+                else:
+                    st.caption(f"📄 Sheet: **{sheet_names[0]}**")
+            except Exception:
+                pass  # fallback ke sheet pertama
 
     if uploaded_file is not None:
         st.markdown("---")
