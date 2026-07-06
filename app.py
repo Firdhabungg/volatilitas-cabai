@@ -170,13 +170,12 @@ with st.sidebar:
     st.title("Aplikasi Prediksi Volatilitas Harga Cabai")
     st.markdown("---")
     daftar = st.selectbox(
-        "📋 Navigasi Menu",
+        "Pilih Menu",
         ["Dashboard", "Analisis Data", "GARCH Volatilitas",
          "Hasil Clustering", "Simulasi Dataset Baru", "Kesimpulan"],
     )
     st.markdown("---")
     st.caption("dibuat dengan :fire: oleh **Kelompok Barisan Terdepan**")
-    st.caption("Universitas AMIKOM Yogyakarta · 2026")
 
 
 # ╔═══════════════════════════════════════════╗
@@ -509,7 +508,7 @@ elif daftar == "GARCH Volatilitas":
         st.error("❌ Tidak ada data volatilitas yang berhasil dihitung.")
         st.stop()
 
-    st.success(f"✅ Volatilitas berhasil dihitung untuk **{len(df_vol)} provinsi**.")
+    st.success(f"Volatilitas berhasil dihitung untuk **{len(df_vol)} provinsi**.")
 
     st.markdown("---")
 
@@ -881,7 +880,7 @@ elif daftar == "Simulasi Dataset Baru":
                     status_area.error("❌ Tidak ada data volatilitas yang berhasil dihitung. Pastikan dataset memiliki cukup data.")
                     st.stop()
 
-                status_area.success(f"✅ Analisis selesai! Ditemukan **{len(df_result)} provinsi/daerah**.")
+                status_area.success(f"Analisis selesai! Ditemukan **{len(df_result)} provinsi/daerah**.")
 
                 st.markdown("---")
 
@@ -973,7 +972,7 @@ elif daftar == "Kesimpulan":
     st.markdown('<p class="hero-title">📝 Kesimpulan Penelitian</p>', unsafe_allow_html=True)
     st.markdown(
         '<p class="hero-subtitle">'
-        'Ringkasan temuan, rekomendasi, dan limitasi dari analisis volatilitas harga cabai.'
+        'Ringkasan temuan, rekomendasi, dan batasan dari analisis volatilitas harga cabai.'
         '</p>',
         unsafe_allow_html=True,
     )
@@ -1055,8 +1054,8 @@ elif daftar == "Kesimpulan":
 
     st.markdown("---")
 
-    # Limitasi
-    st.subheader("⚠️ Limitasi Penelitian")
+    # Batasan Penelitian
+    st.subheader("⚠️ Batasan Penelitian")
     st.markdown("""
     - **Periode data terbatas**: Analisis menggunakan data April 2024 – April 2026 (±2 tahun).
       Periode yang lebih panjang dapat memberikan gambaran volatilitas yang lebih komprehensif.
