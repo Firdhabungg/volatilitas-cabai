@@ -168,6 +168,11 @@ def bersihkan_dataset(file_atau_path, nama_provinsi=None, sheet_name=0):
                 "Isi nama provinsi/daerah untuk data ini terlebih dahulu."
             )
         df_raw['provinsi'] = nama_provinsi
+    else:
+        if nama_provinsi:
+            df_raw = df_raw[df_raw['provinsi'].astype(str).str.strip().str.lower() == nama_provinsi.strip().lower()]
+            if df_raw.empty:
+                raise ValueError(f"Provinsi '{nama_provinsi}' tidak ditemukan dalam dataset ini.")
 
     if 'level' not in df_raw.columns:
         df_raw['level'] = 'item'

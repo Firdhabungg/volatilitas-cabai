@@ -885,13 +885,18 @@ elif daftar == "Simulasi Dataset Baru":
                         progress_callback=progress_callback,
                     )
                 except ValueError as ve:
-                    if "provinsi" in str(ve).lower():
+                    error_msg = str(ve).lower()
+                    if "tidak memiliki kolom 'provinsi'" in error_msg:
                         progress_bar.progress(0)
                         status_area.warning(
                             "⚠️ File ini tidak memiliki kolom **'provinsi'**. "
                             "Silakan isi **Nama Provinsi** di kolom sebelah kanan, "
                             "lalu klik **Jalankan Analisis** kembali."
                         )
+                        st.stop()
+                    elif "tidak ditemukan dalam dataset" in error_msg:
+                        progress_bar.progress(0)
+                        status_area.error(f"❌ {str(ve)}")
                         st.stop()
                     raise
 
